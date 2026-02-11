@@ -5,13 +5,19 @@
   "main": "dist/index.js",
   "type": "module",
   "scripts": {
-    "dev": "tsx watch src/index.ts",
+    "dev": "wrangler dev",
+    "dev:local": "tsx watch src/index.ts",
     "build": "tsc",
     "start": "node dist/index.js",
+    "deploy": "wrangler deploy",
+    "deploy:staging": "wrangler deploy --env development",
+    "deploy:prod": "wrangler deploy --env production",
     "test": "vitest",
+    "test:ci": "vitest --run",
     "test:coverage": "vitest --coverage",
     "lint": "eslint src --fix",
-    "format": "prettier --write \"src/**/*.ts\""
+    "format": "prettier --write \"src/**/*.ts\"",
+    "setup": "bash scripts/setup.sh"
   },
   "keywords": [
     "meta",

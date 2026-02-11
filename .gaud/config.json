@@ -1,0 +1,81 @@
+{
+  "project": "gaud-integrations",
+  "description": "Multi-CRM integration service for gaud-erp",
+  "repository": "gauderp/gaud-integrations",
+  "type": "backend",
+  "stack": ["Node.js", "TypeScript", "Fastify"],
+  "aiReview": {
+    "enabled": true,
+    "provider": "gemini",
+    "autoMergeOnApproval": false,
+    "requireApprovalBefore": ["main"],
+    "reviewRules": {
+      "minTests": 0.8,
+      "maxComplexity": 10,
+      "requireDocumentation": true,
+      "requireTypeScript": true
+    }
+  },
+  "deployment": {
+    "enabled": true,
+    "environments": [
+      {
+        "name": "staging",
+        "branch": "develop",
+        "trigger": "push",
+        "automate": true
+      },
+      {
+        "name": "production",
+        "branch": "main",
+        "trigger": "push",
+        "automate": true,
+        "requireApproval": false
+      }
+    ],
+    "healthCheck": {
+      "url": "/health",
+      "timeout": 5000,
+      "retries": 3
+    }
+  },
+  "webhooks": [
+    {
+      "event": "push",
+      "url": "https://gaud-agent-api.felipe-ab5.workers.dev/webhooks/github/push"
+    },
+    {
+      "event": "pull_request",
+      "url": "https://gaud-agent-api.felipe-ab5.workers.dev/webhooks/github/pr"
+    },
+    {
+      "event": "deployment",
+      "url": "https://gaud-agent-api.felipe-ab5.workers.dev/webhooks/deployment"
+    }
+  ],
+  "monitoring": {
+    "enabled": true,
+    "alerts": [
+      {
+        "type": "deployment_failure",
+        "channel": "slack",
+        "webhook": "${SLACK_WEBHOOK_CRITICAL}"
+      },
+      {
+        "type": "test_failure",
+        "channel": "slack",
+        "webhook": "${SLACK_WEBHOOK_WARNING}"
+      }
+    ]
+  },
+  "relatedProjects": [
+    "gaud-erp-backoffice",
+    "gaud-developer"
+  ],
+  "maintainers": [
+    {
+      "name": "Claude Code",
+      "role": "AI Developer"
+    }
+  ]
+}
