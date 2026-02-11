@@ -151,6 +151,14 @@ export class CrmAccountManager {
 
   /**
    * Helper: Criar adapter baseado no tipo CRM
+   *
+   * Para adicionar um novo CRM (ex: HubSpot):
+   * 1. Criar HubSpotAdapter em src/services/crm/adapters/HubSpotAdapter.ts
+   * 2. Implementar interface ICrmAdapter
+   * 3. Adicionar case 'hubspot' aqui
+   * 4. Criar testes em tests/unit/services.crm.hubspot.adapter.test.ts
+   *
+   * Ver: docs/ADDING_NEW_CRM.md para guia completo
    */
   private createAdapter(config: CrmAccountConfig): ICrmAdapter {
     switch (config.type) {
@@ -161,11 +169,11 @@ export class CrmAccountManager {
         return new PipedriveAdapter(config.apiToken, config.domain);
 
       case 'hubspot':
-        // TODO: Implementar HubSpotAdapter
+        // TODO: Implementar HubSpotAdapter (veja docs/ADDING_NEW_CRM.md)
         throw new Error('HubSpot adapter not yet implemented');
 
       case 'salesforce':
-        // TODO: Implementar SalesforceAdapter
+        // TODO: Implementar SalesforceAdapter (veja docs/ADDING_NEW_CRM.md)
         throw new Error('Salesforce adapter not yet implemented');
 
       default:
