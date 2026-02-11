@@ -1,0 +1,74 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model WebhookLog {
+  id        String   @id @default(cuid())
+  source    String   // "meta", "whatsapp", "pipedrive"
+  eventType String
+  payload   Json
+  status    String   @default("pending") // pending, processed, failed
+  error     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([source])
+  @@index([createdAt])
+}
+
+model MetaConversion {
+  id              String   @id @default(cuid())
+  eventId         String   @unique
+  eventName       String
+  eventTime       DateTime
+  userData        Json
+  customData      Json?
+  pixelId         String
+  status          String   @default("pending") // pending, sent, failed
+  errorMessage    String?
+  pipedriveLeadId String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@index([pixelId])
+  @@index([status])
+}
+
+model WhatsAppMessage {
+  id           String   @id @default(cuid())
+  waId         String
+  phoneNumber  String
+  messageText  String
+  senderName   String?
+  status       String   @default("received") // received, processed, failed
+  errorMessage String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@index([waId])
+  @@index([status])
+}
+
+model PipedriveSync {
+  id                String   @id @default(cuid())
+  externalLeadId    String   @unique // from Meta or WhatsApp
+  pipedriveLeadId   Int?
+  syncStatus        String   @default("pending") // pending, synced, failed
+  errorMessage      String?
+  source            String   // "meta" or "whatsapp"
+  syncedData        Json?
+  lastSyncAt        DateTime?
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  @@index([source])
+  @@index([syncStatus])
+}
