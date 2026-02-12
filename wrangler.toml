@@ -1,7 +1,7 @@
 name = "gaud-integrations"
 main = "src/index.ts"
 compatibility_date = "2024-01-01"
-account_id = ""  # Configure com seu account ID do Cloudflare
+account_id = "ab53a785ed641dc3753caa607652164b"
 
 # KV Namespace para cache
 kv_namespaces = [
