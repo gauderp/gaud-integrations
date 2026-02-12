@@ -1,7 +1,6 @@
 import crypto from 'crypto';
 import { z } from 'zod';
 import type {
-  MetaWebhookPayload,
   MetaConversionEventData,
   MetaUserData,
   NormalizedUserData,

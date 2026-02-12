@@ -1,6 +1,5 @@
 import type {
   PipedriveContact,
-  PipedriveLead,
   LeadCreationPayload,
 } from '../../models/pipedrive.types';
 

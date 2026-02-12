@@ -1,4 +1,3 @@
-import { z } from 'zod';
 import type {
   WhatsAppBusinessAccount,
   WhatsAppBusinessMessage,
@@ -105,6 +104,7 @@ export class WhatsAppBusinessService {
             for (const status of value.statuses) {
               // Handle status updates (delivered, read, etc)
               // In production, update database status
+              console.debug('[WhatsAppBusinessService] Status update:', status.id);
               processed++;
             }
           }
