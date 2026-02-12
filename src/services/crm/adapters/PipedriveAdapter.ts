@@ -317,7 +317,7 @@ export class PipedriveAdapter implements ICrmAdapter {
   /**
    * Verificar assinatura do webhook
    */
-  verifyWebhook(signature: string, payload: string): boolean {
+  verifyWebhook(_signature: string, _payload: string): boolean {
     // Implementar verificação específica do Pipedrive se necessário
     return true;
   }
@@ -342,7 +342,7 @@ export class PipedriveAdapter implements ICrmAdapter {
   /**
    * Testar conexão com Pipedrive
    */
-  async testConnection(accountId: string): Promise<boolean> {
+  async testConnection(_accountId: string): Promise<boolean> {
     try {
       const response = await this.apiClient.getPipelines();
       return response.success;
